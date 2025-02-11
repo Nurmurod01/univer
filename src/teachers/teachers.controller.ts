@@ -17,10 +17,10 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from 'src/common/guards/auth.guard';
 
 @Controller('teachers')
-@UseGuards(AuthGuard)
 export class TeachersController {
   constructor(private readonly teachersService: TeachersService) {}
 
+  @UseGuards(AuthGuard)
   @Post()
   @UseInterceptors(FileInterceptor('imageUrl'))
   async create(
@@ -43,6 +43,7 @@ export class TeachersController {
     return this.teachersService.findOne(+id);
   }
 
+  @UseGuards(AuthGuard)
   @Patch(':id')
   @UseInterceptors(FileInterceptor('imageUrl'))
   update(
@@ -53,6 +54,7 @@ export class TeachersController {
     return this.teachersService.update(+id, updateTeacherDto, image);
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.teachersService.remove(+id);

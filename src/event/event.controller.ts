@@ -17,10 +17,10 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from 'src/common/guards/auth.guard';
 
 @Controller('event')
-@UseGuards(AuthGuard)
 export class EventController {
   constructor(private readonly eventService: EventService) {}
 
+  @UseGuards(AuthGuard)
   @Post()
   @UseInterceptors(FileInterceptor('imageUrl'))
   create(
@@ -40,6 +40,7 @@ export class EventController {
     return this.eventService.findOne(parseInt(id, 10));
   }
 
+  @UseGuards(AuthGuard)
   @Patch(':id')
   @UseInterceptors(FileInterceptor('imageUrl'))
   update(
@@ -50,6 +51,7 @@ export class EventController {
     return this.eventService.update(parseInt(id, 10), updateEventDto, image);
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.eventService.remove(parseInt(id, 10));
